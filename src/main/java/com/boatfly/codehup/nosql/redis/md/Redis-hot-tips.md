@@ -36,3 +36,11 @@ redis会默认检查这么多个key，并选择LRU的那个进行移除。
 ## dir ./
 指定本地数据库存放目录
 
+## save <seconds> <changes>
+save 900 1          //15分钟内改了1次
+save 300 10         //5分钟内改了10次
+save 60  10000      //1分钟内改了一万次
+
+`命令号输入save(全部阻塞)/bgsave（异步运行） 可以手动马上生成内存快照，备份`，同样flushdb/flushall 同样能立即触发备份。
+
+## dbfilename dump.rdb
