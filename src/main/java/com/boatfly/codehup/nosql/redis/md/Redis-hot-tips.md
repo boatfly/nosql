@@ -44,3 +44,24 @@ save 60  10000      //1分钟内改了一万次
 `命令号输入save(全部阻塞)/bgsave（异步运行） 可以手动马上生成内存快照，备份`，同样flushdb/flushall 同样能立即触发备份。
 
 ## dbfilename dump.rdb
+
+## appendonly no 
+使用AOF方式持久化。redis默认使用RDB方式。
+- appendfilename "appendonly.aof"
+
+### 当AOF文件损坏
+当AOF文件损坏时，可以使用：redis-check-aof指令查看并修复问题（该指令可以将aof文件中所有不符合语法规范的指令统统删除）
+```aidl
+redis-check-aof --fix appendonly.aof
+```
+
+### Appendfsync everysec
+- allways 实时追加
+- everysec 每秒追加
+- no
+
+### Rewrite
+- auto-aof-rewrite-min-size 64mb //实际生产环境，一定是个大的值，譬如3gb
+- auto-aof-rewrite-percentage 100  //一倍
+
+## RDB和AOF可以共存，启动首先加载的是AOF(appendonly.aof)
